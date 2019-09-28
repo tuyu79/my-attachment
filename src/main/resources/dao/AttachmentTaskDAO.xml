@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.turan.dao.AttachmentTaskDAO">
+  <resultMap id="BaseResultMap" type="com.turan.po.AttachmentTask">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_no" jdbcType="BIGINT" property="taskNo" />
+    <result column="vehicle_no" jdbcType="BIGINT" property="vehicleNo" />
+    <result column="platform_alarm_uid" jdbcType="BIGINT" property="platformAlarmUid" />
+    <result column="file_count" jdbcType="INTEGER" property="fileCount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, task_no, vehicle_no, platform_alarm_uid, file_count, `status`, create_at, update_at
+  </sql>
+  <select id="selectByExample" parameterType="com.turan.po.AttachmentTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from attachment_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attachment_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from attachment_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.turan.po.AttachmentTaskExample">
+    delete from attachment_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.turan.po.AttachmentTask">
+    insert into attachment_task (id, task_no, vehicle_no, 
+      platform_alarm_uid, file_count, `status`, 
+      create_at, update_at)
+    values (#{id,jdbcType=BIGINT}, #{taskNo,jdbcType=BIGINT}, #{vehicleNo,jdbcType=BIGINT}, 
+      #{platformAlarmUid,jdbcType=BIGINT}, #{fileCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.turan.po.AttachmentTask">
+    insert into attachment_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="taskNo != null">
+        task_no,
+      </if>
+      <if test="vehicleNo != null">
+        vehicle_no,
+      </if>
+      <if test="platformAlarmUid != null">
+        platform_alarm_uid,
+      </if>
+      <if test="fileCount != null">
+        file_count,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskNo != null">
+        #{taskNo,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleNo != null">
+        #{vehicleNo,jdbcType=BIGINT},
+      </if>
+      <if test="platformAlarmUid != null">
+        #{platformAlarmUid,jdbcType=BIGINT},
+      </if>
+      <if test="fileCount != null">
+        #{fileCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.turan.po.AttachmentTaskExample" resultType="java.lang.Long">
+    select count(*) from attachment_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update attachment_task
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskNo != null">
+        task_no = #{record.taskNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.vehicleNo != null">
+        vehicle_no = #{record.vehicleNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.platformAlarmUid != null">
+        platform_alarm_uid = #{record.platformAlarmUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileCount != null">
+        file_count = #{record.fileCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update attachment_task
+    set id = #{record.id,jdbcType=BIGINT},
+      task_no = #{record.taskNo,jdbcType=BIGINT},
+      vehicle_no = #{record.vehicleNo,jdbcType=BIGINT},
+      platform_alarm_uid = #{record.platformAlarmUid,jdbcType=BIGINT},
+      file_count = #{record.fileCount,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      update_at = #{record.updateAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.turan.po.AttachmentTask">
+    update attachment_task
+    <set>
+      <if test="taskNo != null">
+        task_no = #{taskNo,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleNo != null">
+        vehicle_no = #{vehicleNo,jdbcType=BIGINT},
+      </if>
+      <if test="platformAlarmUid != null">
+        platform_alarm_uid = #{platformAlarmUid,jdbcType=BIGINT},
+      </if>
+      <if test="fileCount != null">
+        file_count = #{fileCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.turan.po.AttachmentTask">
+    update attachment_task
+    set task_no = #{taskNo,jdbcType=BIGINT},
+      vehicle_no = #{vehicleNo,jdbcType=BIGINT},
+      platform_alarm_uid = #{platformAlarmUid,jdbcType=BIGINT},
+      file_count = #{fileCount,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
